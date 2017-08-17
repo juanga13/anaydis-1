@@ -1,0 +1,12 @@
+build
+.idea/
+target/
+.idea_modules/
+.history
+out
+.DS_Store
+.gradle
+*.iws
+*.iml
+*.ipr
+persistence.xml
