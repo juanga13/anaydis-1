@@ -15,7 +15,7 @@ import java.util.List;
 
 public class SortersBenchmark extends SorterTest{
 
-    private final static int N = 1000;
+    private final static int N = 10;
     private final static int REPETITION = 200;
 
 

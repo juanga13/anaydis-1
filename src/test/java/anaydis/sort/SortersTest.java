@@ -31,8 +31,8 @@ public class SortersTest extends SorterTest {
     @Test
     public void testInsertionSorter(){
         InsertionSorter insertionSorter = new InsertionSorter();
-        testStringSorter(insertionSorter);
         testIntegerSorter(insertionSorter);
+        testStringSorter(insertionSorter);
     }
 
     private void testStringSorter(AbstractSorter sorter){
