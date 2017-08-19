@@ -1,19 +1,38 @@
 package anaydis.sort.provider;
 
-import anaydis.sort.Sorter;
-import anaydis.sort.SorterType;
+import anaydis.sort.*;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
+
 public class SorterProviderImpl implements SorterProvider{
+
+    private final Map<SorterType, Sorter> sorters = new EnumMap<>(SorterType.class);
+
+    public SorterProviderImpl(){
+        sorters.put(SorterType.BUBBLE, new BubbleSorter());
+        sorters.put(SorterType.INSERTION, new InsertionSorter());
+        sorters.put(SorterType.SELECTION, new SelectionSorter());
+    }
+    
     @NotNull
     @Override
     public Iterable<Sorter> getAllSorters() {
-        return null;
+        final List<Sorter> result = new ArrayList<>();
+        for (Map.Entry<SorterType, Sorter> entry: sorters.entrySet()) {
+            result.add(entry.getValue());
+        }
+        return result;
     }
 
     @NotNull
     @Override
     public Sorter getSorterForType(@NotNull SorterType type) {
-        return null;
+        if(!sorters.containsKey(type))
+            throw new IllegalArgumentException();
+        return sorters.get(type);
     }
 }

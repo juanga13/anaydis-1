@@ -5,6 +5,7 @@ import anaydis.sort.gui.SorterListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -22,17 +23,40 @@ abstract class AbstractSorter implements ObservableSorter, Sorter {
 
     @Override
     public void addSorterListener(@NotNull SorterListener sorterListener) {
-
+        listeners.add(sorterListener);
     }
 
     @Override
     public void removeSorterListener(@NotNull SorterListener sorterListener) {
-
+        listeners.remove(sorterListener);
     }
 
     @NotNull
     @Override
     public SorterType getType() {
         return type;
+    }
+
+    protected <T> boolean greater(@NotNull Comparator<T> comparator, @NotNull List<T> list, int i, int j){
+        for (SorterListener listener: listeners) {
+            listener.greater(i,j);
+        }
+        return comparator.compare(list.get(i), list.get(j)) > 0;
+    }
+
+    protected <T> boolean equals(@NotNull Comparator<T> comparator, @NotNull List<T> list, int i, int j){
+        for (SorterListener listener: listeners) {
+            listener.equals(i,j);
+        }
+        return comparator.compare(list.get(i),list.get(j)) == 0;
+    }
+
+    protected <T> void swap(@NotNull List<T> list, int i, int j) {
+        for (SorterListener listener : listeners) {
+            listener.swap(i, j);
+        }
+        T aux = list.get(i);
+        list.set(i, list.get(j));
+        list.set(j, aux);
     }
 }

@@ -1,6 +1,7 @@
 package anaydis.sort;
 
 import anaydis.sort.provider.SorterProvider;
+import anaydis.sort.provider.SorterProviderImpl;
 
 /**
  * Sorter provider test
@@ -8,6 +9,6 @@ import anaydis.sort.provider.SorterProvider;
 public class SorterProviderTest extends AbstractSorterProviderTest {
 
     @Override protected SorterProvider createSorterProvider() {
-        throw new IllegalStateException("To be implemented!");
+        return new SorterProviderImpl();
     }
 }

@@ -14,13 +14,18 @@ public class SelectionSorter extends  AbstractSorter{
 
     @Override
     public <T> void sort(@NotNull Comparator<T> comparator, @NotNull List<T> list) {
-        for(int i = 0; i<list.size(); i++){
+        final int n = list.size();
+        for(int i = 0; i<n; i++){
             int min = i;
-            for(int j = i+1; j<list.size(); j++){
-                final T a = list.get(min);
-                final T b = list.get(j);
-                //TODO hacer greater y swap y subirlos a abstract sorter ya que se los usa en todos los sorts.
+            boolean changed = false;
+            for(int j = i+1; j<n; j++){
+                if(greater(comparator,list,min,j)) {
+                    min = j;
+                    changed = true;
+                }
             }
+            if(changed)
+                swap(list,i, min);
         }
     }
 }
