@@ -1,4 +1,4 @@
-package anaydis.sort.data;
+package anaydis.sort.comparators;
 
 import java.util.Comparator;
 

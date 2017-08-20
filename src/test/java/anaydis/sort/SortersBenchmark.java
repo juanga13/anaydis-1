@@ -1,7 +1,7 @@
 package anaydis.sort;
 
 import anaydis.sort.data.DataSetGenerator;
-import anaydis.sort.data.IntegerComparator;
+import anaydis.sort.comparators.IntegerComparator;
 import anaydis.sort.data.IntegerDataSetGenerator;
 import anaydis.sort.listeners.SorterListenerImpl;
 import anaydis.sort.provider.SorterProvider;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class SortersBenchmark extends SorterTest{
+public class SortersBenchmark{
 
     private final static int N = 10;
     private final static int REPETITION = 200;

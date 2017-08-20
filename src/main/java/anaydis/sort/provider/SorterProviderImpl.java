@@ -21,11 +21,7 @@ public class SorterProviderImpl implements SorterProvider{
     @NotNull
     @Override
     public Iterable<Sorter> getAllSorters() {
-        final List<Sorter> result = new ArrayList<>();
-        for (Map.Entry<SorterType, Sorter> entry: sorters.entrySet()) {
-            result.add(entry.getValue());
-        }
-        return result;
+        return sorters.values();
     }
 
     @NotNull
