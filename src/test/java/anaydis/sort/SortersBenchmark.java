@@ -3,7 +3,7 @@ package anaydis.sort;
 import anaydis.sort.data.DataSetGenerator;
 import anaydis.sort.comparators.IntegerComparator;
 import anaydis.sort.data.IntegerDataSetGenerator;
-import anaydis.sort.listeners.SorterListenerImpl;
+import anaydis.sort.listeners.CounterListener;
 import anaydis.sort.provider.SorterProvider;
 import anaydis.sort.provider.SorterProviderImpl;
 import org.jetbrains.annotations.NotNull;
@@ -51,7 +51,7 @@ public class SortersBenchmark{
     }
 
     private <T> Result benchmark(@NotNull AbstractSorter sorter, @NotNull DataSetGenerator<T> generator, @NotNull Comparator<T> comparator, int order,int n, int r) {
-        final SorterListenerImpl listener = new SorterListenerImpl();
+        final CounterListener listener = new CounterListener();
         sorter.addSorterListener(listener);
         double time = 0;
         for(int i = 0; i<r; i++) {
@@ -65,7 +65,7 @@ public class SortersBenchmark{
         }
         sorter.removeSorterListener(listener);
         return new Result(N, REPETITION,time/ REPETITION,
-                listener.getSwaps()/ REPETITION, listener.getGreater()/ REPETITION);
+                listener.getAmtOfSwaps()/ REPETITION, listener.getAmtOfComparisons()/ REPETITION);
     }
 
     private <T> double timedSort(@NotNull AbstractSorter sorter, Comparator<T> comparator, @NotNull List<T> list){
