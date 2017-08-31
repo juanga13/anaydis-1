@@ -16,7 +16,7 @@ abstract class AbstractSorter implements ObservableSorter, Sorter {
     private final SorterType type;
     private final List<SorterListener> listeners;
 
-    public AbstractSorter(SorterType type) {
+    AbstractSorter(SorterType type) {
         this.type = type;
         this.listeners = new ArrayList<>();
     }
@@ -33,7 +33,7 @@ abstract class AbstractSorter implements ObservableSorter, Sorter {
 
     @NotNull
     @Override
-    public SorterType getType() {
+    public final SorterType getType() {
         return type;
     }
 
@@ -45,18 +45,18 @@ abstract class AbstractSorter implements ObservableSorter, Sorter {
     }
 
     protected <T> boolean equals(@NotNull Comparator<T> comparator, @NotNull List<T> list, int i, int j){
-        for (SorterListener listener: listeners) {
-            listener.equals(i,j);
-        }
+        listeners.forEach(l -> l.equals(i,j));
         return comparator.compare(list.get(i),list.get(j)) == 0;
     }
 
     protected <T> void swap(@NotNull List<T> list, int i, int j) {
-        for (SorterListener listener : listeners) {
-            listener.swap(i, j);
-        }
+        listeners.forEach(l -> l.swap(i,j));
         T aux = list.get(i);
         list.set(i, list.get(j));
         list.set(j, aux);
+    }
+
+    protected void box(int from, int to) {
+        listeners.forEach(l -> l.box(from,to));
     }
 }

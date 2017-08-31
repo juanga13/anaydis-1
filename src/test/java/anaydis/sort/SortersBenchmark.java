@@ -7,20 +7,23 @@ import anaydis.sort.listeners.CounterListener;
 import anaydis.sort.provider.SorterProvider;
 import anaydis.sort.provider.SorterProviderImpl;
 import org.jetbrains.annotations.NotNull;
-import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class SortersBenchmark{
+public class SortersBenchmark {
+
+
+    public static void main(String[] args) {
+        SortersBenchmark sortersBenchmark = new SortersBenchmark();
+        sortersBenchmark.fullBenchmark();
+    }
 
     private final static int N = 10;
     private final static int REPETITION = 200;
 
-
-    @Test
-    public void fullBenchmark() {
+    private void fullBenchmark() {
 
         //Hardcoded integer generator
         final DataSetGenerator generator = new IntegerDataSetGenerator();
@@ -32,13 +35,13 @@ public class SortersBenchmark{
         ArrayList<Result> ascendingResults = new ArrayList<>();
         ArrayList<Result> descendingResults = new ArrayList<>();
         ArrayList<Result> randomResults = new ArrayList<>();
-        for (Sorter sorter: sorters) {
-            ascendingResults.add(benchmark((AbstractSorter)sorter, generator, comparator, 1, N, REPETITION));
-            descendingResults.add(benchmark((AbstractSorter)sorter, generator, comparator, -1, N, REPETITION));
-            randomResults.add(benchmark((AbstractSorter)sorter, generator, comparator, 0, N, REPETITION));
+        for (Sorter sorter : sorters) {
+            ascendingResults.add(benchmark((AbstractSorter) sorter, generator, comparator, 1, N, REPETITION));
+            descendingResults.add(benchmark((AbstractSorter) sorter, generator, comparator, -1, N, REPETITION));
+            randomResults.add(benchmark((AbstractSorter) sorter, generator, comparator, 0, N, REPETITION));
         }
         int i = 0;
-        for (Sorter sorter: sorters) {
+        for (Sorter sorter : sorters) {
             System.out.println(sorter.getType());
             System.out.println("Ascending results");
             System.out.println(ascendingResults.get(i).toString());
@@ -50,33 +53,33 @@ public class SortersBenchmark{
         }
     }
 
-    private <T> Result benchmark(@NotNull AbstractSorter sorter, @NotNull DataSetGenerator<T> generator, @NotNull Comparator<T> comparator, int order,int n, int r) {
+    private <T> Result benchmark(@NotNull AbstractSorter sorter, @NotNull DataSetGenerator<T> generator, @NotNull Comparator<T> comparator, int order, int n, int r) {
         final CounterListener listener = new CounterListener();
         sorter.addSorterListener(listener);
         double time = 0;
-        for(int i = 0; i<r; i++) {
+        for (int i = 0; i < r; i++) {
             List<T> list;
-            if(order == 0)
+            if (order == 0)
                 list = generator.createRandom(n);
-            else if(order > 0)
+            else if (order > 0)
                 list = generator.createAscending(n);
             else list = generator.createDescending(n);
             time += timedSort(sorter, comparator, list);
         }
         sorter.removeSorterListener(listener);
-        return new Result(N, REPETITION,time/ REPETITION,
-                listener.getAmtOfSwaps()/ REPETITION, listener.getAmtOfComparisons()/ REPETITION);
+        return new Result(N, REPETITION, time / REPETITION,
+                listener.getAmtOfSwaps() / REPETITION, listener.getAmtOfComparisons() / REPETITION);
     }
 
-    private <T> double timedSort(@NotNull AbstractSorter sorter, Comparator<T> comparator, @NotNull List<T> list){
+    private <T> double timedSort(@NotNull AbstractSorter sorter, Comparator<T> comparator, @NotNull List<T> list) {
         double start = System.nanoTime();
         sorter.sort(comparator, list);
         double end = System.nanoTime();
-        double time = (end - start)/1000000;
+        double time = (end - start) / 1000000;
         return time;
     }
 
-    private class Result{
+    private class Result {
         private int listSize;
         private int repetitions;
         private double avgTime;
@@ -91,7 +94,7 @@ public class SortersBenchmark{
             this.avgComparisons = avgComparisons;
         }
 
-        public String toString(){
+        public String toString() {
             return new StringBuilder()
                     .append("Repetitions: ").append(repetitions).append("\n")
                     .append("List size: ").append(listSize).append("\n")
@@ -103,4 +106,3 @@ public class SortersBenchmark{
         }
     }
 }
-

@@ -18,6 +18,7 @@ public class BubbleSorter extends AbstractSorter{
         final int n = list.size();
         boolean stop = false;
         for(int i = 0; i < n-1 && !stop; i++){
+            box(i, n-1);
             stop = true;
             for(int j = n-1; j > i; j--){
                 if(greater(comparator, list,j-1, j)) {

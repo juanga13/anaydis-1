@@ -1,5 +1,8 @@
-package anaydis.sort;
+package anaydis.sort.practice;
 
+import anaydis.sort.ShellSorter;
+import anaydis.sort.Sorter;
+import anaydis.sort.SorterType;
 import anaydis.sort.data.DataSetGenerator;
 import anaydis.sort.data.IntegerDataSetGenerator;
 import anaydis.sort.gui.ObservableSorter;
@@ -118,8 +121,8 @@ public class SortingAnalysis {
 
     private Map<SorterType, Cube> cubes() {
         final Map<SorterType, Cube> result = new EnumMap<>(SorterType.class);
-        //final SorterProvider sorters = new SorterProviderImpl();
-        //sorters.getAllSorters().forEach(s -> result.put(s.getType(), cube(s)));
+        final SorterProvider sorters = new SorterProviderImpl();
+        sorters.getAllSorters().forEach(s -> result.put(s.getType(), cube(s)));
         result.put(SorterType.SHELL, cube(new ShellSorter()));
         return result;
     }
@@ -165,12 +168,9 @@ public class SortingAnalysis {
     private <T> void run(final Sorter sorter, final DataSetGenerator<T> generator, Schema schema, final Ordering ordering, final Cube cube) {
         final CounterListener listener = new CounterListener();
         addListener(sorter, listener);
-        //final List<T> datum = ordering.create(generator, schema);
+        final List<T> datum = ordering.create(generator, schema);
         for (int i = 0; i < RUNS; i++) {
-            //final List<T> copy = new ArrayList<>(datum);
-
-            final List<T> copy = ordering.create(generator, schema);
-
+            final List<T> copy = new ArrayList<>(datum);
             listener.start();
             sorter.sort(generator.getComparator(), copy);
             listener.stop();
