@@ -23,9 +23,11 @@ public class SortingAnalysis {
     }
 
     private enum Schema {
-        ONE(100),
-        TWO(500),
-        THREE(1000);
+        ONE(10),
+        TWO(100),
+        THREE(1000),
+        FOUR(5000),
+        FIVE(10000);
 
         int size;
 
@@ -116,8 +118,9 @@ public class SortingAnalysis {
 
     private Map<SorterType, Cube> cubes() {
         final Map<SorterType, Cube> result = new EnumMap<>(SorterType.class);
-        final SorterProvider sorters = new SorterProviderImpl();
-        sorters.getAllSorters().forEach(s -> result.put(s.getType(), cube(s)));
+        //final SorterProvider sorters = new SorterProviderImpl();
+        //sorters.getAllSorters().forEach(s -> result.put(s.getType(), cube(s)));
+        result.put(SorterType.SHELL, cube(new ShellSorter()));
         return result;
     }
 
@@ -149,7 +152,10 @@ public class SortingAnalysis {
                         final Cell cell = s.cell(unit);
                         final LongSummaryStatistics statistics =
                                 cell.data.stream().collect(Collectors.summarizingLong(value -> value));
-                        System.out.println("\t\t\t\t " + statistics);
+                        if(unit == DataUnit.TIME)
+                            System.out.println("\t\t\t\t " + statistics.getAverage()/1000000);
+                        else
+                            System.out.println("\t\t\t\t " + statistics.getAverage());
                     }
                 }
             }
