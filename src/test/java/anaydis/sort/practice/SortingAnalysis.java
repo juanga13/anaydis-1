@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class SortingAnalysis {
 
-    private static final int RUNS = 50;
+    private static final int RUNS = 10;
 
     private enum DataUnit {
         SWAPS,
