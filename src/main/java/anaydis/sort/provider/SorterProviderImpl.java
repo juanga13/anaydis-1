@@ -16,6 +16,7 @@ public class SorterProviderImpl implements SorterProvider{
         sorters.put(SorterType.SELECTION, new SelectionSorter());
         sorters.put(SorterType.SHELL, new ShellSorter());
         sorters.put(SorterType.QUICK, new QuickSorter());
+        sorters.put(SorterType.QUICK_NON_RECURSIVE, new QuickNonRecursiveSorter());
     }
     
     @NotNull
