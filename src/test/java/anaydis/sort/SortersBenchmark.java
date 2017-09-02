@@ -20,7 +20,7 @@ public class SortersBenchmark {
         sortersBenchmark.fullBenchmark();
     }
 
-    private final static int N = 10;
+    private final static int N = 100;
     private final static int REPETITION = 200;
 
     private void fullBenchmark() {

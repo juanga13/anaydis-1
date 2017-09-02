@@ -28,9 +28,9 @@ public class SortingAnalysis {
     private enum Schema {
         ONE(10),
         TWO(100),
-        THREE(1000),
-        FOUR(5000),
-        FIVE(10000);
+        THREE(1000);
+        //FOUR(5000),
+        //FIVE(10000);
 
         int size;
 
@@ -123,7 +123,7 @@ public class SortingAnalysis {
         final Map<SorterType, Cube> result = new EnumMap<>(SorterType.class);
         final SorterProvider sorters = new SorterProviderImpl();
         sorters.getAllSorters().forEach(s -> result.put(s.getType(), cube(s)));
-        result.put(SorterType.SHELL, cube(new ShellSorter()));
+        //result.put(SorterType.SHELL, cube(new ShellSorter()));
         return result;
     }
 
