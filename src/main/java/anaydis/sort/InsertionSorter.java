@@ -13,9 +13,13 @@ public class InsertionSorter extends AbstractSorter {
 
     @Override
     public <T> void sort(@NotNull Comparator<T> comparator, @NotNull List<T> list) {
-        final int n = list.size();
-        for(int i = 0; i<n ; i++){
-            for(int j = i; j>0;j--){
+        sort(comparator, list, 0, list.size());
+    }
+
+    public <T> void sort(@NotNull Comparator<T> comparator, @NotNull List<T> list, int l, int r) {
+        box(l,r);
+        for(int i = l; i<r ; i++){
+            for(int j = i; j>l ; j--){
                 if(greater(comparator,list,j-1,j)){
                     swap(list,j,j-1);
                 }

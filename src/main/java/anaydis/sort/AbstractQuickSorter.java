@@ -12,14 +12,14 @@ abstract class AbstractQuickSorter extends AbstractSorter{
     }
 
     protected <T> int partition(@NotNull Comparator<T> comparator, @NotNull List<T> list, int lo, int hi){
-        int i = lo - 1;
-        int j = hi;
+        int i = lo;
+        int j = hi-1;
 
         while(true) {
-            while(greater(comparator, list, hi, ++i)) //find item left to swap
-                if (i == hi) break;
-            while(greater(comparator, list, --j, hi)) //find item right to swap
-                if (j == lo) break;
+            while(!greater(comparator, list, i, hi) && i != hi) //find item left to swap, ! because lesser or equals
+                i++;
+            while(!greater(comparator, list, hi, j) && j != lo) //find item right to swap
+                j--;
             if (i >= j) break; //check if pointers cross
             swap(list, i, j);
         }
