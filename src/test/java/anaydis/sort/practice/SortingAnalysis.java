@@ -30,8 +30,8 @@ public class SortingAnalysis {
     private enum Schema {
         ONE(1000),
         TWO(10000),
-        THREE(100000),
-        FOUR(1000000);
+        THREE(100000);
+        //FOUR(1000000);
 
         int size;
 
@@ -131,8 +131,9 @@ public class SortingAnalysis {
         final Cube cube = new Cube();
         final IntegerDataSetGenerator generator = new IntegerDataSetGenerator();
 
-        for (final Schema schema : Schema.values()) {
-            for (final Ordering ordering : Ordering.values()) {
+        for (Schema schema : Schema.values()) {
+            for (Ordering ordering : Ordering.values()) {
+                System.out.println("Running: Sorter " + sorter.getType() + " Schema " + schema.size + " Order " + ordering);
                 run(sorter, generator, schema, ordering, cube);
             }
         }
@@ -148,7 +149,7 @@ public class SortingAnalysis {
                 System.out.println("\tORDERING = " + ordering);
                 final SuperCell[] schemas = cube.schemas(ordering);
                 for (final Schema schema : Schema.values()) {
-                    System.out.println("\t\tSCHEMA = " + schema);
+                    System.out.println("\t\tSCHEMA = " + schema.size);
                     final SuperCell s = schemas[schema.ordinal()];
                     for (DataUnit unit : DataUnit.values()) {
                         System.out.println("\t\t\tUNIT = " + unit);
@@ -170,6 +171,7 @@ public class SortingAnalysis {
         addListener(sorter, listener);
         final List<T> datum = ordering.create(generator, schema);
         for (int i = 0; i < RUNS; i++) {
+            System.out.println("run: " + (i + 1));
             final List<T> copy = new ArrayList<>(datum);
             listener.start();
             sorter.sort(generator.getComparator(), copy);

@@ -8,27 +8,29 @@ import java.util.List;
 
 public class QuickCutSorter extends AbstractQuickSorter{
 
-    final private static int M = 10;
     final InsertionSorter insertionSorter = new InsertionSorter();
 
     public QuickCutSorter() {
         super(SorterType.QUICK_CUT);
     }
 
-
-
-    @Override
-    public <T> void sort(@NotNull Comparator<T> comparator, @NotNull List<T> list) {
-        sort(comparator, list, 0, list.size()-1);
+    public <T> void sort(@NotNull Comparator<T> comparator, @NotNull List<T> list, int m) {
+        sort(comparator, list, 0, list.size()-1, m);
         insertionSorter.sort(comparator, list);
     }
 
-    private <T> void sort(@NotNull Comparator<T> comparator, @NotNull List<T> list, int lo, int hi) {
-        if(hi - lo <= M)
+    @Override
+    public <T> void sort(@NotNull Comparator<T> comparator, @NotNull List<T> list) {
+        sort(comparator, list, 0, list.size()-1, 15);
+        insertionSorter.sort(comparator, list);
+    }
+
+    private <T> void sort(@NotNull Comparator<T> comparator, @NotNull List<T> list, int lo, int hi, int m) {
+        if(hi - lo <= m)
             return;
         int i = partition(comparator, list, lo, hi);
-        sort(comparator, list, lo, i-1);
-        sort(comparator, list, i+1, hi);
+        sort(comparator, list, lo, i-1, m);
+        sort(comparator, list, i+1, hi, m);
     }
 
     @Override

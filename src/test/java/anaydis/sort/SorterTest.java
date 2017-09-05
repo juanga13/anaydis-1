@@ -17,7 +17,7 @@ abstract class SorterTest extends AbstractSorterTest {
 
     public SorterTest(SorterType sorterType){
         this.sorterType = sorterType;
-        n = 100;
+        n = 1000;
     }
 
 
