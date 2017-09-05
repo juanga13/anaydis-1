@@ -7,6 +7,7 @@ import anaydis.sort.data.DataSetGenerator;
 import anaydis.sort.data.IntegerDataSetGenerator;
 import anaydis.sort.gui.ObservableSorter;
 import anaydis.sort.listeners.CounterListener;
+import anaydis.sort.provider.QuickSorterProvider;
 import anaydis.sort.provider.SorterProvider;
 import anaydis.sort.provider.SorterProviderImpl;
 import org.jetbrains.annotations.NotNull;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class SortingAnalysis {
 
     private static final int RUNS = 10;
+    private final SorterProvider sorters = new QuickSorterProvider();
 
     private enum DataUnit {
         SWAPS,
@@ -26,11 +28,10 @@ public class SortingAnalysis {
     }
 
     private enum Schema {
-        ONE(10),
-        TWO(100),
-        THREE(1000);
-        //FOUR(5000),
-        //FIVE(10000);
+        ONE(1000),
+        TWO(10000),
+        THREE(100000),
+        FOUR(1000000);
 
         int size;
 
@@ -121,7 +122,6 @@ public class SortingAnalysis {
 
     private Map<SorterType, Cube> cubes() {
         final Map<SorterType, Cube> result = new EnumMap<>(SorterType.class);
-        final SorterProvider sorters = new SorterProviderImpl();
         sorters.getAllSorters().forEach(s -> result.put(s.getType(), cube(s)));
         //result.put(SorterType.SHELL, cube(new ShellSorter()));
         return result;
