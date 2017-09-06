@@ -21,7 +21,7 @@ public class QuickCutSorter extends AbstractQuickSorter{
 
     @Override
     public <T> void sort(@NotNull Comparator<T> comparator, @NotNull List<T> list) {
-        sort(comparator, list, 0, list.size()-1, 15);
+        sort(comparator, list, 0, list.size()-1, 5);
         insertionSorter.sort(comparator, list);
     }
 

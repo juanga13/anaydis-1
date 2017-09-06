@@ -1,6 +1,5 @@
 package anaydis.sort.practice;
 
-import anaydis.sort.ShellSorter;
 import anaydis.sort.Sorter;
 import anaydis.sort.SorterType;
 import anaydis.sort.data.DataSetGenerator;
@@ -28,10 +27,10 @@ public class SortingAnalysis {
     }
 
     private enum Schema {
-        ONE(1000),
-        TWO(10000),
-        THREE(100000);
-        //FOUR(1000000);
+        ONE(12500),
+        TWO(25000),
+        THREE(50000),
+        FOUR(100000);
 
         int size;
 
