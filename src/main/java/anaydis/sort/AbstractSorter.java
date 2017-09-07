@@ -59,4 +59,15 @@ abstract class AbstractSorter implements ObservableSorter, Sorter {
     protected void box(int from, int to) {
         listeners.forEach(l -> l.box(from,to));
     }
+
+    protected <T> void copy(List<T> list, int from, List<T> aux, int to, boolean copyToAux){
+        aux.set(to, list.get(from));
+        listeners.forEach(l -> l.copy(from, to, true));
+    }
+
+
+    protected <T> void add(List<T> list, int from, List<T> aux, boolean addToAux){
+        listeners.forEach(l -> l.copy(from, list.size()-1,addToAux));
+        aux.add(list.get(from));
+    }
 }

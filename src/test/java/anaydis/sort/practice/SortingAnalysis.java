@@ -1,15 +1,13 @@
 package anaydis.sort.practice;
 
-import anaydis.sort.ShellSorter;
 import anaydis.sort.Sorter;
 import anaydis.sort.SorterType;
 import anaydis.sort.data.DataSetGenerator;
 import anaydis.sort.data.IntegerDataSetGenerator;
 import anaydis.sort.gui.ObservableSorter;
 import anaydis.sort.listeners.CounterListener;
-import anaydis.sort.provider.QuickSorterProvider;
+import anaydis.sort.provider.Practice.QuickSorterProvider;
 import anaydis.sort.provider.SorterProvider;
-import anaydis.sort.provider.SorterProviderImpl;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;

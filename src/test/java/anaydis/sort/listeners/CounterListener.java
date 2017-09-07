@@ -22,7 +22,7 @@ public class CounterListener implements SorterListener {
     }
 
     @Override
-    public void copy(int i, int i1, boolean b) {
+    public void copy(int from, int to, boolean copyToAux) {
         amtOfCopy++;
     }
 

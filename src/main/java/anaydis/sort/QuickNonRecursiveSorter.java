@@ -13,27 +13,28 @@ public class QuickNonRecursiveSorter extends AbstractQuickSorter{
 
     @Override
     public <T> void sort(@NotNull Comparator<T> comparator, @NotNull List<T> list) {
-        Stack<Integer> S = new Stack<>();
+        Stack<Integer> s = new Stack<>();
         int l = 0;
         int r = list.size()-1;
-        S.push(l);
-        S.push(r);
-        while (!S.empty()) {
-            r = S.pop();
-            l = S.pop();
+        s.push(l);
+        s.push(r);
+        while (!s.empty()) {
+            r = s.pop();
+            l = s.pop();
             if (r <= l) {
                 continue;
             }
             int i = partition(comparator, list, l, r);
-            if (i - l > r - i) {
-                S.push(l);
-                S.push(i - 1);
+            final boolean condition = i - l > r - i;
+            if (condition) {
+                s.push(l);
+                s.push(i - 1);
             }
-            S.push(i + 1);
-            S.push(r);
-            if (r-i >= i-l) {
-                S.push(l);
-                S.push(i - 1);
+            s.push(i + 1);
+            s.push(r);
+            if (!condition) {
+                s.push(l);
+                s.push(i - 1);
             }
         }
     }
