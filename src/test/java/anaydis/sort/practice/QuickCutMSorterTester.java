@@ -11,9 +11,10 @@ public class QuickCutMSorterTester {
     final static int RUNS = 200;
 
     private enum Schema {
-        ONE(100),
-        TWO(1000),
-        THREE(10000);
+        ONE(1000),
+        TWO(10000),
+        THREE(100000),
+        FOUR(1000000);
 
         int size;
 
@@ -50,7 +51,6 @@ public class QuickCutMSorterTester {
         final Map<Schema, Map<M, Result>> results = new EnumMap<>(Schema.class);
 
         for (Schema schema : Schema.values()) {
-
             results.put(schema,run(sorter, generator, schema));
         }
 
@@ -65,6 +65,8 @@ public class QuickCutMSorterTester {
 
     private <T> Map<M,Result> run(final QuickCutSorter sorter, final DataSetGenerator<T> generator, Schema schema) {
 
+        System.out.println("Running: Schema: " + schema.size);
+
         final Map<M, Result> results = new EnumMap<>(M.class);
 
         final CounterListener listener = new CounterListener();
@@ -72,6 +74,7 @@ public class QuickCutMSorterTester {
         final List<T> datum = generator.createRandom(schema.size);
 
         for (M m: M.values()) {
+            System.out.println("\t M: " + m.value);
             final Result result = new Result(RUNS);
             for (int i = 0; i < RUNS; i++) {
                 final List<T> copy = new ArrayList<>(datum);
