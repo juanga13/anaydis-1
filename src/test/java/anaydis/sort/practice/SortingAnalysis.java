@@ -6,8 +6,8 @@ import anaydis.sort.data.DataSetGenerator;
 import anaydis.sort.data.IntegerDataSetGenerator;
 import anaydis.sort.gui.ObservableSorter;
 import anaydis.sort.listeners.CounterListener;
-import anaydis.sort.provider.Practice.QuickSorterProvider;
 import anaydis.sort.provider.SorterProvider;
+import anaydis.sort.provider.SorterProviderImpl;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class SortingAnalysis {
 
     private static final int RUNS = 10;
-    private final SorterProvider sorters = new QuickSorterProvider();
+    private final SorterProvider sorters = new SorterProviderImpl();
 
     private enum DataUnit {
         SWAPS,
