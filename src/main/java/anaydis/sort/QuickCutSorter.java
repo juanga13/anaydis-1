@@ -8,26 +8,27 @@ import java.util.List;
 
 public class QuickCutSorter extends AbstractQuickSorter{
 
-    final InsertionSorter insertionSorter = new InsertionSorter();
+    final private InsertionSorter cut = new InsertionSorter();
 
     public QuickCutSorter() {
         super(SorterType.QUICK_CUT);
     }
 
-    public <T> void sort(@NotNull Comparator<T> comparator, @NotNull List<T> list, int m) {
-        sort(comparator, list, 0, list.size()-1, m);
-        insertionSorter.sort(comparator, list);
-    }
-
     @Override
     public <T> void sort(@NotNull Comparator<T> comparator, @NotNull List<T> list) {
         sort(comparator, list, 0, list.size()-1, 5);
-        insertionSorter.sort(comparator, list);
     }
 
+    public <T> void sort(@NotNull Comparator<T> comparator, @NotNull List<T> list, int m) {
+        sort(comparator, list, 0, list.size()-1, m);
+    }
+
+
     private <T> void sort(@NotNull Comparator<T> comparator, @NotNull List<T> list, int lo, int hi, int m) {
-        if(hi - lo <= m)
+        if(hi - lo <= m) {
+            cut.sort(comparator,list,lo,hi);
             return;
+        }
         int i = partition(comparator, list, lo, hi);
         sort(comparator, list, lo, i-1, m);
         sort(comparator, list, i+1, hi, m);
@@ -36,13 +37,13 @@ public class QuickCutSorter extends AbstractQuickSorter{
     @Override
     public void addSorterListener(@NotNull SorterListener sorterListener) {
         super.addSorterListener(sorterListener);
-        insertionSorter.addSorterListener(sorterListener);
+        cut.addSorterListener(sorterListener);
     }
 
     @Override
     public void removeSorterListener(@NotNull SorterListener sorterListener) {
         super.removeSorterListener(sorterListener);
-        insertionSorter.removeSorterListener(sorterListener);
+        cut.removeSorterListener(sorterListener);
     }
 
     // Alternative implementation
@@ -54,7 +55,7 @@ public class QuickCutSorter extends AbstractQuickSorter{
 
     public <T> void sort(@NotNull Comparator<T> comparator, @NotNull List<T> list, int lo, int hi) {
         if(hi - lo <= m){
-            insertionSorter.sort(comparator, list);
+            cut.sort(comparator, list);
             return;
         }
         int i = partition(comparator, list, lo, hi);
