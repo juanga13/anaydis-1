@@ -16,8 +16,8 @@ abstract class AbstractQuickSorter extends AbstractSorter{
         int j = hi;
 
         while(true) {
-            while(!greater(comparator, list, ++i, hi) && i < hi); //find item left to swap, ! because lesser or equals
-            while(!greater(comparator, list, hi, --j) && j > lo); //find item right to swap
+            while(greater(comparator, list, hi, ++i) && i < hi); //find item left to swap, ! because lesser or equals
+            while(greater(comparator, list, --j, hi) && j > lo); //find item right to swap
             if (i >= j) break; //check if pointers cross
             swap(list, i, j);
         }

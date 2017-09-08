@@ -5,7 +5,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Comparator;
 import java.util.List;
 
-public class QuickMedOfThreeSorter extends AbstractQuickSorter{
+public class QuickMedOfThreeSorter extends AbstractHybridQuickSorter{
+
+    final private static int M = 10;
+
     public QuickMedOfThreeSorter() {
         super(SorterType.QUICK_MED_OF_THREE);
     }
@@ -13,10 +16,11 @@ public class QuickMedOfThreeSorter extends AbstractQuickSorter{
     @Override
     public <T> void sort(@NotNull Comparator<T> comparator, @NotNull List<T> list) {
         sort(comparator, list, 0, list.size()-1);
+        cut.sort(comparator, list);
     }
 
     public <T> void sort(@NotNull Comparator<T> comparator, @NotNull List<T> list, int lo, int hi) {
-        if(hi <= lo)return;
+        if(hi - lo <= M) return;
         swap(list, (lo+hi)/2, hi-1);
         compareAndExchange(comparator, list, lo, hi-1);
         compareAndExchange(comparator, list, lo, hi);
