@@ -1,8 +1,10 @@
-package anaydis.sort;
+package anaydis.sort.practice;
 
+import anaydis.sort.Sorter;
 import anaydis.sort.data.DataSetGenerator;
 import anaydis.sort.comparators.IntegerComparator;
 import anaydis.sort.data.IntegerDataSetGenerator;
+import anaydis.sort.gui.ObservableSorter;
 import anaydis.sort.listeners.CounterListener;
 import anaydis.sort.provider.SorterProvider;
 import anaydis.sort.provider.SorterProviderImpl;
@@ -36,9 +38,9 @@ public class SortersBenchmark {
         ArrayList<Result> descendingResults = new ArrayList<>();
         ArrayList<Result> randomResults = new ArrayList<>();
         for (Sorter sorter : sorters) {
-            ascendingResults.add(benchmark((AbstractSorter) sorter, generator, comparator, 1, N, REPETITION));
-            descendingResults.add(benchmark((AbstractSorter) sorter, generator, comparator, -1, N, REPETITION));
-            randomResults.add(benchmark((AbstractSorter) sorter, generator, comparator, 0, N, REPETITION));
+            ascendingResults.add(benchmark((ObservableSorter) sorter, generator, comparator, 1, N, REPETITION));
+            descendingResults.add(benchmark((ObservableSorter) sorter, generator, comparator, -1, N, REPETITION));
+            randomResults.add(benchmark((ObservableSorter) sorter, generator, comparator, 0, N, REPETITION));
         }
         int i = 0;
         for (Sorter sorter : sorters) {
@@ -53,7 +55,7 @@ public class SortersBenchmark {
         }
     }
 
-    private <T> Result benchmark(@NotNull AbstractSorter sorter, @NotNull DataSetGenerator<T> generator, @NotNull Comparator<T> comparator, int order, int n, int r) {
+    private <T> Result benchmark(@NotNull ObservableSorter sorter, @NotNull DataSetGenerator<T> generator, @NotNull Comparator<T> comparator, int order, int n, int r) {
         final CounterListener listener = new CounterListener();
         sorter.addSorterListener(listener);
         double time = 0;
@@ -71,7 +73,7 @@ public class SortersBenchmark {
                 listener.getAmtOfSwaps() / REPETITION, listener.getAmtOfComparisons() / REPETITION);
     }
 
-    private <T> double timedSort(@NotNull AbstractSorter sorter, Comparator<T> comparator, @NotNull List<T> list) {
+    private <T> double timedSort(@NotNull Sorter sorter, Comparator<T> comparator, @NotNull List<T> list) {
         double start = System.nanoTime();
         sorter.sort(comparator, list);
         double end = System.nanoTime();

@@ -11,9 +11,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RunWith(Parameterized.class)
 public class AllSortersTest extends AbstractSorterTest{
@@ -21,12 +23,16 @@ public class AllSortersTest extends AbstractSorterTest{
     @Parameter
     public Sorter sorter = null;
 
-    @Parameters(name = "sorter {0}")
+    @Parameters(name = "Sorter {0}")
     public static List<Object[]> sorters(){
         final SorterProvider provider = new SorterProviderImpl();
-        return Arrays.stream(Iterables.toArray(provider.getAllSorters()))
+        return toStream(provider.getAllSorters())
                 .map(sorter -> new Object[]{sorter})
                 .collect(Collectors.toList());
+    }
+
+    private static <T> Stream<T> toStream(Iterable<T> iterable){
+        return Arrays.stream(Iterables.toArray(iterable));
     }
 
     @Test
