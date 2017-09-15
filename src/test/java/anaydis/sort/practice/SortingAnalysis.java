@@ -125,9 +125,9 @@ public class SortingAnalysis {
 
     private Map<SorterType, Cube> cubes() {
         final Map<SorterType, Cube> result = new EnumMap<>(SorterType.class);
-        //sorters.getAllSorters().forEach(s -> result.put(s.getType(), cube(s)));
-        result.put(SorterType.MERGE, cube(new MergeSort()));
-        result.put(SorterType.MERGE_BOTTOM_UP, cube(new MergeBUSort()));
+        sorters.getAllSorters().forEach(s -> result.put(s.getType(), cube(s)));
+        //result.put(SorterType.MERGE, cube(new MergeSort()));
+        //result.put(SorterType.MERGE_BOTTOM_UP, cube(new MergeBUSort()));
         return result;
     }
 

@@ -6,8 +6,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Random;
 
 public class RandomizedTree<K,V> extends TreeMap<K,V>{//TODO remove
+
+    private final Random random = new Random();
+    private static final double PROBABILITY = 0.5;
 
     public RandomizedTree(Comparator<K> comparator) {
         super(comparator);
@@ -20,12 +24,16 @@ public class RandomizedTree<K,V> extends TreeMap<K,V>{//TODO remove
 
     @Override
     public V get(@NotNull K key) {
-        return find(head, key).value;
+
+        final Node<K, V> result = find(head, key);
+        return result == null ? null : result.value;
     }
 
     @Override
     public V put(@NotNull K key, V value) {
-        head = rootPut(head, key, value);
+        if(random.nextDouble() < PROBABILITY)
+            head = rootPut(head, key, value);
+        else head = put(head, key, value);
         return null;
     }
 
@@ -88,15 +96,15 @@ public class RandomizedTree<K,V> extends TreeMap<K,V>{//TODO remove
     @Override
     public Iterator<K> keys() {
         ArrayList<K> keys = new ArrayList<>();
-        inOrderString(head, keys);
+        keysInOrder(head, keys);
         return keys.iterator();
     }
 
-    public void inOrderString(Node<K,V> node,@NotNull ArrayList<K> result){
+    private void keysInOrder(Node<K, V> node, @NotNull ArrayList<K> result){
         if(node != null) {
-            inOrderString(node.left, result);
+            keysInOrder(node.left, result);
             result.add(node.key);
-            inOrderString(node.right, result);
+            keysInOrder(node.right, result);
         }
     }
 
