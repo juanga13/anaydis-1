@@ -3,7 +3,7 @@ package anaydis.sort.practice;
 import anaydis.sort.ShellSorter;
 import anaydis.sort.data.DataSetGenerator;
 import anaydis.sort.data.IntegerDataSetGenerator;
-import anaydis.sort.listeners.CounterListener;
+import anaydis.sort.practice.listeners.CounterListener;
 
 import java.util.ArrayList;
 import java.util.EnumMap;

@@ -1,4 +1,4 @@
-package anaydis.sort.listeners;
+package anaydis.sort.practice.listeners;
 
 import anaydis.sort.gui.SorterListener;
 

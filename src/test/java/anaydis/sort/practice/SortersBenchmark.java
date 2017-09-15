@@ -5,7 +5,7 @@ import anaydis.sort.data.DataSetGenerator;
 import anaydis.sort.comparators.IntegerComparator;
 import anaydis.sort.data.IntegerDataSetGenerator;
 import anaydis.sort.gui.ObservableSorter;
-import anaydis.sort.listeners.CounterListener;
+import anaydis.sort.practice.listeners.CounterListener;
 import anaydis.sort.provider.SorterProvider;
 import anaydis.sort.provider.SorterProviderImpl;
 import org.jetbrains.annotations.NotNull;
