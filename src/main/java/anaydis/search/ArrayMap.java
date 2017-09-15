@@ -2,23 +2,25 @@ package anaydis.search;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
-/*
 public class ArrayMap<K,V> implements Map<K,V>{
 
     private final List<K> keys;
     private final List<V> values;
     private final Comparator<K> comparator;
 
-    public ArrayMap(Comparator<K> comparator, int initialSize) {
-        this.keys = new ArrayList<K>(initialSize);
-        this.values = new ArrayList<V>(initialSize);
-        this.comparator = comparator;
 
+    public ArrayMap(Comparator<K> comparator) {
+        this.keys = new ArrayList<>();
+        this.values = new ArrayList<>();
+        this.comparator = comparator;
+    }
+
+    public ArrayMap(Comparator<K> comparator, int initialSize) {
+        this.keys = new ArrayList<>(initialSize);
+        this.values = new ArrayList<>(initialSize);
+        this.comparator = comparator;
     }
 
     @Override
@@ -39,7 +41,7 @@ public class ArrayMap<K,V> implements Map<K,V>{
 
     @Override
     public V put(@NotNull K key, V value) {
-        int index = indexOf(key);
+        int index = find(key,0, size()-1);
         if(index < 0){
             index = (-index) -1;
             keys.add(null);
@@ -57,12 +59,13 @@ public class ArrayMap<K,V> implements Map<K,V>{
 
     @Override
     public void clear() {
-
+        keys.clear();
+        values.clear();
     }
 
     @Override
     public Iterator<K> keys() {
-        return null;
+        return keys.iterator();
     }
 
     private int indexOf(@NotNull final K key){
@@ -73,8 +76,10 @@ public class ArrayMap<K,V> implements Map<K,V>{
     private int find(@NotNull final K key, int lo,  int hi){
         if(lo > hi) return -(lo+1);
         final int mid = (lo + hi)/2;
-        int cmp = compa
+        int cmp = comparator.compare(key, keys.get(mid));
+        if(cmp == 0) return mid;
+        if(cmp < 0) return find(key, lo, mid-1);
+        return find(key, mid+1, hi);
     }
 
 }
-*/

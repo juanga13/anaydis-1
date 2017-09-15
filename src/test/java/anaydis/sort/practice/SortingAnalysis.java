@@ -1,5 +1,7 @@
 package anaydis.sort.practice;
 
+import anaydis.sort.MergeBUSort;
+import anaydis.sort.MergeSort;
 import anaydis.sort.Sorter;
 import anaydis.sort.SorterType;
 import anaydis.sort.data.DataSetGenerator;
@@ -22,14 +24,16 @@ public class SortingAnalysis {
     private enum DataUnit {
         SWAPS,
         COMPARISONS,
-        TIME
+        TIME,
+        COPIES
     }
 
     private enum Schema {
-        ONE(12500),
-        TWO(25000),
-        THREE(50000),
-        FOUR(100000);
+        ONE(100),
+        TWO(500),
+        THREE(1000),
+        FOUR(2500),
+        FIVE(5000);
 
         int size;
 
@@ -97,6 +101,7 @@ public class SortingAnalysis {
             data[DataUnit.SWAPS.ordinal()].submit(listener.getAmtOfSwaps());
             data[DataUnit.COMPARISONS.ordinal()].submit(listener.getAmtOfComparisons());
             data[DataUnit.TIME.ordinal()].submit(listener.getElapsedTime());
+            data[DataUnit.COPIES.ordinal()].submit(listener.getAmtOfCopies());
         }
 
         private void init() {
@@ -120,8 +125,9 @@ public class SortingAnalysis {
 
     private Map<SorterType, Cube> cubes() {
         final Map<SorterType, Cube> result = new EnumMap<>(SorterType.class);
-        sorters.getAllSorters().forEach(s -> result.put(s.getType(), cube(s)));
-        //result.put(SorterType.SHELL, cube(new ShellSorter()));
+        //sorters.getAllSorters().forEach(s -> result.put(s.getType(), cube(s)));
+        result.put(SorterType.MERGE, cube(new MergeSort()));
+        result.put(SorterType.MERGE_BOTTOM_UP, cube(new MergeBUSort()));
         return result;
     }
 

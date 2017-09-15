@@ -64,7 +64,7 @@ public class CounterListener implements SorterListener {
         return amtOfEquals;
     }
 
-    public int getAmtOfCopy() {
+    public int getAmtOfCopies() {
         return amtOfCopy;
     }
 
