@@ -1,4 +1,4 @@
-package anaydis.sort.comparators;
+package anaydis.sort.practice.listeners.comparators;
 
 import java.util.Comparator;
 

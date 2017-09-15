@@ -1,6 +1,6 @@
 package anaydis.search;
 
-import anaydis.sort.comparators.IntegerComparator;
+import anaydis.sort.practice.listeners.comparators.IntegerComparator;
 import org.assertj.core.util.Iterables;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -2,7 +2,7 @@ package anaydis.sort.practice;
 
 import anaydis.sort.Sorter;
 import anaydis.sort.data.DataSetGenerator;
-import anaydis.sort.comparators.IntegerComparator;
+import anaydis.sort.practice.listeners.comparators.IntegerComparator;
 import anaydis.sort.data.IntegerDataSetGenerator;
 import anaydis.sort.gui.ObservableSorter;
 import anaydis.sort.practice.listeners.CounterListener;
