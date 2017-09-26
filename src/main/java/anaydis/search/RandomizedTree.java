@@ -12,6 +12,7 @@ public class RandomizedTree<K,V> extends TreeMap<K,V>{//TODO remove
 
     private final Random random = new Random();
     private static final double PROBABILITY = 0.5;
+    private V previousValue = null;
 
     public RandomizedTree(Comparator<K> comparator) {
         super(comparator);
@@ -34,7 +35,9 @@ public class RandomizedTree<K,V> extends TreeMap<K,V>{//TODO remove
         if(random.nextDouble() < PROBABILITY)
             head = rootPut(head, key, value);
         else head = put(head, key, value);
-        return null;
+        final V aux = previousValue;
+        previousValue = null;
+        return aux;
     }
 
     private Node<K,V> put(Node<K,V> node, K key, V value){
@@ -46,7 +49,10 @@ public class RandomizedTree<K,V> extends TreeMap<K,V>{//TODO remove
              int cmp = comparator.compare(key, node.key);
              if(cmp < 0) node.left = put(node.left, key, value);
              else if(cmp > 0) node.right = put(node.right, key, value);
-             else node.value = value;
+             else {
+                 previousValue = node.value;
+                 node.value = value;
+             }
              return node;
          }
     }
@@ -67,6 +73,7 @@ public class RandomizedTree<K,V> extends TreeMap<K,V>{//TODO remove
                 return rotateLeft(node);
             }
             else{
+                previousValue = node.value;
                 node.value = value;
                 return node;
             }
