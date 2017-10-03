@@ -25,7 +25,6 @@ public class RandomizedTree<K,V> extends TreeMap<K,V>{//TODO remove
 
     @Override
     public V get(@NotNull K key) {
-
         final Node<K, V> result = find(head, key);
         return result == null ? null : result.value;
     }
@@ -115,7 +114,7 @@ public class RandomizedTree<K,V> extends TreeMap<K,V>{//TODO remove
         }
     }
 
-    public Node<K,V> find(Node<K,V> node,@NotNull K key){
+    private Node<K,V> find(Node<K, V> node, @NotNull K key){
         if(node == null) return null;
         int cmp = comparator.compare(key, node.key);
         if(cmp == 0) return node;
