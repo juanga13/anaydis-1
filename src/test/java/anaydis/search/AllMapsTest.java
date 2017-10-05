@@ -31,7 +31,6 @@ public class AllMapsTest {
         maps.add(new RandomizedTreeMap<>(comparator));
         maps.add(new RWayTrieMap<>());
         maps.add(new TSTMap<>());
-        maps.add(new BinaryTrieMap<>());
 
         return maps;
     }
@@ -101,7 +100,6 @@ public class AllMapsTest {
 
     @Test
     public void keysTest(){
-        Map<String, Integer> map = new BinaryTrieMap<>();
         ArrayList<String> keys = new ArrayList<>();
         for(int i=0; i < 10; i++) keys.add("" + i);
         Iterator<String> keysI = keys.iterator();
