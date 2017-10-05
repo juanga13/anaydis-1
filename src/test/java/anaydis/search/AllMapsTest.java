@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Parameterized.class)
-public class ArrayMapTest {
+public class AllMapsTest {
 
 
     @Parameterized.Parameter public Map<String, Integer> map;
@@ -83,7 +83,6 @@ public class ArrayMapTest {
 
     @Test
     public void clearTest(){
-        //Map<Integer,String> map = new ArrayMap<>(new IntegerComparator(), 10);
 
         map.put("1", 1);
         map.put("8", 8);
@@ -99,4 +98,36 @@ public class ArrayMapTest {
         map.clear();
         assertThat(map.isEmpty()).isTrue();
     }
+
+    /*
+    @Test
+    public void keysTest(){
+        //Map<String, Integer> map = new TSTMap<>();
+        ArrayList<String> keys = new ArrayList<>();
+        for(int i=0; i < 10; i++) keys.add("" + i);
+        Iterator<String> keysI = keys.iterator();
+
+        map.put("1", 1);
+        map.put("8", 8);
+        map.put("2", 2);
+        map.put("4", 4);
+        map.put("0", 0);
+        map.put("5", 5);
+        map.put("3", 3);
+        map.put("9", 9);
+        map.put("7", 7);
+        map.put("6", 6);
+
+        Iterator<String> mapKeys = map.keys();
+
+        boolean b = true;
+        while(keysI.hasNext()){
+            if(!mapKeys.next().equals(keysI.next())){
+                b = false;
+                break;
+            }
+        }
+        assertThat(b).isTrue();
+    }
+    */
 }

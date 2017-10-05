@@ -2,7 +2,9 @@ package anaydis.search;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class TSTMap<V> extends TreeMap<String,V>{
 
@@ -67,7 +69,18 @@ public class TSTMap<V> extends TreeMap<String,V>{
 
     @Override
     public Iterator<String> keys() {
-        return null;
+        ArrayList<String> keys = new ArrayList<>();
+        keysInOrder(head, "", keys);
+        return keys.iterator();
+    }
+
+    private void keysInOrder(Node<V> node, String currentKey, List<String> keys){
+        if(node == null) return;
+        keysInOrder(node.left, currentKey, keys);
+        String nodeKey = currentKey + node.chr;
+        if(node.value != null) keys.add(nodeKey);
+        keysInOrder(node.middle, nodeKey, keys);
+        keysInOrder(node.right, currentKey, keys);
     }
 
     private Node<V> find(Node<V> node, @NotNull String key, int level){

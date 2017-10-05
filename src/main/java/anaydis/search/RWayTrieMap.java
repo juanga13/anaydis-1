@@ -83,20 +83,20 @@ public class RWayTrieMap<V> extends TreeMap<String, V> {
     @Override
     public Iterator<String> keys() {
         ArrayList<String> keys = new ArrayList<>();
-        traverse(head, "", keys);
+        keysInOrder(head, "", keys);
         return keys.iterator();
     }
 
-    private void traverse(Node<V> node, String originKey, List<String> target){
+    private void keysInOrder(Node<V> node, String currentKey, List<String> keys){
         Node<V>[] array = node.next;
         for(int i = 0; i < array.length; i++){
-            Node<V> currentNode = array[i];
             if(array[i] != null){
-                String nodeKey = originKey + (char) i;
+                Node<V> currentNode = array[i];
+                String nodeKey = currentKey + (char) i;
                 if(currentNode.value != null){
-                    target.add(nodeKey);
+                    keys.add(nodeKey);
                 }
-                traverse(currentNode,nodeKey,target);
+                keysInOrder(currentNode,nodeKey,keys);
             }
         }
     }
