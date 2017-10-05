@@ -3,7 +3,7 @@ package anaydis.search.practice.tp5;
 import anaydis.search.ArrayMap;
 import anaydis.search.Map;
 import anaydis.search.RWayTrieMap;
-import anaydis.search.RandomizedTree;
+import anaydis.search.RandomizedTreeMap;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class MapAnalyzer {
 
         maps = new ArrayList<>();
         maps.add(new ArrayMap<>(String::compareTo));
-        maps.add(new RandomizedTree<>(String::compareTo));
+        maps.add(new RandomizedTreeMap<>(String::compareTo));
         maps.add(new RWayTrieMap<>());
 
         FileReader fileReader = new FileReader(QUIJOTE);

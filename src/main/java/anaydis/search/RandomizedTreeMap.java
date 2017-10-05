@@ -8,14 +8,15 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Random;
 
-public class RandomizedTree<K,V> extends TreeMap<K,V>{//TODO remove
+public class RandomizedTreeMap<K,V> extends TreeMap<K,V>{//TODO remove
 
+    private Node<K,V> head;
     private final Random random = new Random();
     private static final double PROBABILITY = 0.5;
-    private V previousValue = null;
+    private final Comparator<K> comparator;
 
-    public RandomizedTree(Comparator<K> comparator) {
-        super(comparator);
+    public RandomizedTreeMap(Comparator<K> comparator) {
+        this.comparator = comparator;
     }
 
     @Override
@@ -120,6 +121,33 @@ public class RandomizedTree<K,V> extends TreeMap<K,V>{//TODO remove
         if(cmp == 0) return node;
         if(cmp < 0) return find(node.left, key);
         return find(node.right, key);
+    }
+
+    protected class Node<K,V>{
+        K key;
+        V value;
+        Node<K,V> left = null;
+        Node<K,V> right = null;
+
+        public Node(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        public Node(K key, V value, Node<K, V> left, Node<K, V> right) {
+            this.key = key;
+            this.value = value;
+            this.left = left;
+            this.right = right;
+        }
+
+        public Node<K, V> getCopy() {
+            return new Node<>(key, value, left, right);
+        }
+
+        public String toString(){
+            return key + "[" + value + "]";
+        }
     }
 
 }

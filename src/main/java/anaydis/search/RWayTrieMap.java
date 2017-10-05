@@ -2,18 +2,18 @@ package anaydis.search;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
-public class RWayTrieMap<V> implements Map<String, V> {
+public class RWayTrieMap<V> extends TreeMap<String, V> {
 
-    private V previousValue = null;
     private Node<V> head = null;
-    private int size = 0;
 
     private class Node<V>{
-        V value;
-        Node<V>[] next;
+        private V value;
+        private Node<V>[] next;
         private Node(V value) {
             next = (Node<V>[]) new Node[256];
             Arrays.fill(next, null);
@@ -82,7 +82,23 @@ public class RWayTrieMap<V> implements Map<String, V> {
 
     @Override
     public Iterator<String> keys() {
-        return null;
+        ArrayList<String> keys = new ArrayList<>();
+        traverse(head, "", keys);
+        return keys.iterator();
+    }
+
+    private void traverse(Node<V> node, String originKey, List<String> target){
+        Node<V>[] array = node.next;
+        for(int i = 0; i < array.length; i++){
+            Node<V> currentNode = array[i];
+            if(array[i] != null){
+                String nodeKey = originKey + (char) i;
+                if(currentNode.value != null){
+                    target.add(nodeKey);
+                }
+                traverse(currentNode,nodeKey,target);
+            }
+        }
     }
 
     private Node<V> find(Node<V> node, @NotNull String key, int level){
