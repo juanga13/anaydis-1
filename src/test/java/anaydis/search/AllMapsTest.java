@@ -43,7 +43,7 @@ public class AllMapsTest {
         assertThat(map.size()).isEqualTo(0);
 
         map.put("1", 1);
-        map.put("luu", 8);
+        map.put("8", 8);
         map.put("2", 2);
         map.put("4", 4);
         map.put("0", 0);
@@ -106,16 +106,16 @@ public class AllMapsTest {
         for(int i=0; i < 10; i++) keys.add("" + i);
         Iterator<String> keysI = keys.iterator();
 
-        map.put("1", 1);
-        map.put("8", 8);
-        map.put("2", 2);
-        map.put("4", 4);
-        map.put("0", 0);
-        map.put("5", 5);
-        map.put("3", 3);
-        map.put("9", 9);
-        map.put("7", 7);
-        map.put("6", 6);
+        map.put("a", 1);
+        map.put("b", 8);
+        map.put("c", 2);
+        map.put("d", 4);
+        map.put("e", 0);
+        map.put("f", 5);
+        map.put("g", 3);
+        map.put("h", 9);
+        map.put("i", 7);
+        map.put("j", 6);
 
         Iterator<String> mapKeys = map.keys();
 
