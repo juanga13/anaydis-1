@@ -30,8 +30,8 @@ public class AllMapsTest {
         maps.add(new ArrayMap<>(comparator));
         maps.add(new RandomizedTreeMap<>(comparator));
         maps.add(new RWayTrieMap<>());
-        maps.add(new TSTMap<>());
-        maps.add(new BinaryTrieMap<>());
+        //maps.add(new TSTMap<>());
+        //maps.add(new BinaryTrieMap<>());
 
         return maps;
     }
