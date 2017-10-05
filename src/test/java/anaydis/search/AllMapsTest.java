@@ -30,7 +30,7 @@ public class AllMapsTest {
         maps.add(new ArrayMap<>(comparator));
         maps.add(new RandomizedTreeMap<>(comparator));
         maps.add(new RWayTrieMap<>());
-        //maps.add(new TSTMap<>());
+        maps.add(new TSTMap<>());
         //maps.add(new BinaryTrieMap<>());
 
         return maps;
@@ -43,7 +43,7 @@ public class AllMapsTest {
         assertThat(map.size()).isEqualTo(0);
 
         map.put("1", 1);
-        map.put("8", 8);
+        map.put("luu", 8);
         map.put("2", 2);
         map.put("4", 4);
         map.put("0", 0);
