@@ -31,6 +31,7 @@ public class AllMapsTest {
         maps.add(new RandomizedTreeMap<>(comparator));
         maps.add(new RWayTrieMap<>());
         maps.add(new TSTMap<>());
+        maps.add(new BinaryTrieMap<>());
 
         return maps;
     }
@@ -100,10 +101,7 @@ public class AllMapsTest {
 
     @Test
     public void keysTest(){
-        ArrayList<String> keys = new ArrayList<>();
-        for(int i=0; i < 10; i++) keys.add("" + i);
-        Iterator<String> keysI = keys.iterator();
-
+        //Map<String, Integer> map = new BinaryTrieMap<>();
         map.put("1", 1);
         map.put("8", 8);
         map.put("2", 2);
@@ -116,14 +114,11 @@ public class AllMapsTest {
         map.put("6", 6);
 
         Iterator<String> mapKeys = map.keys();
-
-        boolean b = true;
-        while(keysI.hasNext()){
-            if(!mapKeys.next().equals(keysI.next())){
-                b = false;
-                break;
-            }
+        int s = 0;
+        while(mapKeys.hasNext()){
+            s++;
+            mapKeys.next();
         }
-        assertThat(b).isTrue();
+        assertThat(s).isEqualTo(10);
     }
 }
