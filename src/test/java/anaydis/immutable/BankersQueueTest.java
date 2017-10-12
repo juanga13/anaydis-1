@@ -26,7 +26,7 @@ public class BankersQueueTest {
 
         boolean b = true;
         for (int i = 0; i < queues.size(); i++) {
-            if(!dequeue(queues.get(i), i+1)) {
+            if(!dequeue(queues.get(i), i+1, 1)) {
                 b = false;
                 break;
             }
@@ -34,9 +34,9 @@ public class BankersQueueTest {
         assertThat(b).isTrue();
     }
 
-    private boolean dequeue(Queue<Integer> q, int value) {
-        if (value < 1) return true;
+    private boolean dequeue(Queue<Integer> q, int value, int i) {
+        if (i > value) return true;
         final Queue.Result<Integer> result = q.dequeue();
-        return result.value == value && dequeue(result.queue, value - 1);
+        return result.value == i && dequeue(result.queue, value,i +1);
     }
 }

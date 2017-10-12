@@ -16,7 +16,7 @@ public class BankersQueue<T> implements Queue<T>{
     @NotNull
     @Override
     public Queue<T> enqueue(@NotNull T value) {
-        return new BankersQueue<>(List.cons(value, front), rear);
+        return new BankersQueue<>(front, List.cons(value, rear));
     }
 
     @NotNull
