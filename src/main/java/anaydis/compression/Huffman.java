@@ -1,6 +1,5 @@
 package anaydis.compression;
 
-import anaydis.search.ArrayMap;
 import anaydis.search.Map;
 import anaydis.search.RandomizedTreeMap;
 import org.jetbrains.annotations.NotNull;
@@ -44,8 +43,11 @@ public class Huffman implements Compressor{
             }
             nextByte = current.add(table.get(bytes.poll()));
         }
-        if(!current.isEmpty())
+        if(!current.isEmpty()) {
             outputStream.write(current.key << 8 - current.count);
+            if(current.isFull())
+                outputStream.write(nextByte.key << 8 - nextByte.count);
+        }
     }
 
     private void writeTable(@NotNull OutputStream outputStream,@NotNull Map<Integer, Bits> table) throws IOException {
@@ -60,7 +62,6 @@ public class Huffman implements Compressor{
     }
 
     private Node createHuffmanTree(@NotNull PriorityQueue<Node> queue){
-
         while (queue.size()>1){
             Node node1 = queue.poll();
             Node node2 = queue.poll();
@@ -70,7 +71,7 @@ public class Huffman implements Compressor{
     }
 
     private TreeCodeLengthPair createHuffmanTable(Node head){
-        final Map<Integer, Bits> map = new ArrayMap<>(Integer::compareTo);
+        final Map<Integer, Bits> map = new RandomizedTreeMap<>(Integer::compareTo);
         final int length = createHuffmanTable(map, head, new Bits());
         return new TreeCodeLengthPair(length, map);
     }
@@ -94,7 +95,7 @@ public class Huffman implements Compressor{
         while(it.hasNext()) {
             int value = it.next();
             int frequency = freqMap.get(value);
-            final Node node = new Node(value, frequency, 1);
+            final Node node = new Node(value, frequency);
             result.add(node);
         }
         return result;
@@ -120,12 +121,12 @@ public class Huffman implements Compressor{
         Node right;
         Integer value;
         Integer frequency;
-        Integer size;
+        Integer height;
 
-        Node(int value, int frequency, int size) {
+        Node(int value, int frequency) {
             this.value = value;
             this.frequency = frequency;
-            this.size = size;
+            this.height = 0;
         }
 
         Node(Node left, Node right, Integer value, int frequency) {
@@ -133,12 +134,20 @@ public class Huffman implements Compressor{
             this.right = right;
             this.value = value;
             this.frequency = frequency;
-            this.size = right.size + left.size;
+            this.height = right.height > left.height ? right.height + 1 : left.height + 1;
         }
 
         public int compareTo(@NotNull Node node) {
             int cmp = frequency.compareTo(node.frequency);
-            return cmp == 0 ? size.compareTo(node.size) : cmp;
+
+            int f1 = cmp > 0 ? frequency : node.frequency;
+            int f2 = cmp > 0 ? node.frequency : frequency;
+
+            if(f2*4 < f1) return cmp;
+
+            int r = height - node.height;
+            int hcmp = r > 1 ? 1 : r < -1 ? -1 : 0;
+            return hcmp != 0 ? hcmp : cmp;
         }
     }
 
@@ -190,7 +199,7 @@ public class Huffman implements Compressor{
     }
 
     private Map<Bits,Integer> readTable(@NotNull InputStream inputStream) throws IOException {
-        final Map<Bits, Integer> table = new ArrayMap<>(new BitsComparator());
+        final Map<Bits, Integer> table = new RandomizedTreeMap<>(new BitsComparator());
         int current = inputStream.read();
         while(current != 0xFF){
             int count = inputStream.read();
