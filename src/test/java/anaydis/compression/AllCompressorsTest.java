@@ -31,6 +31,7 @@ public class AllCompressorsTest {
         comps.add(new RunLengthEncoding());
         comps.add(new Huffman());
         comps.add(new BurrowsWheeler());
+        comps.add(new MoveToFront());
         return comps;
     }
 

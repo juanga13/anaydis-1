@@ -44,16 +44,6 @@ public class BurrowsWheeler implements Compressor{
 
     @Override
     public void decode(@NotNull InputStream inputStream, @NotNull OutputStream outputStream) throws IOException {
-        /*
-        leer L y num N
-        ordenar para tener F
-        armo T: T[i] = j con j siendo el char en L e i la pos del mismo en F
-        con N sé cual es mi primer char - useless
-        empiezo de t[ultimo indice]
-        t4 = 0 : t0 = 1: t5 = 2 : t6 = 3 : t2 = 4 : t3 = 5 : t1 = 6
-        2 - 5 - 3 - 4 - 0 - 1 - 6
-        varias formas: poner N de L, luego N de F, luego empezar con T[N] = K y seguir con T[K] = ....
-        */
         ArrayList<ByteIndexPair> l = new ArrayList<>();
         int n = readEncoded(inputStream, l);
         l.sort(ByteIndexPair::compareTo);
