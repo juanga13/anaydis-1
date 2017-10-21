@@ -20,18 +20,12 @@ public class Huffman implements Compressor{
         int codeLength = pair.length;
         writeTable(outputStream, table);
         outputStream.write(0xFF);
-        writeCodeLenght(outputStream, codeLength);
+        CompressionUtil.writeInteger(outputStream, codeLength);
         outputStream.write(0xFF);
         writeCode(outputStream, table, bytes);
     }
 
-    private void writeCodeLenght(@NotNull OutputStream outputStream, int codeLength) throws IOException {
-        while(codeLength - 127 > 0) {
-            outputStream.write(127);
-            codeLength -= 127;
-        }
-        outputStream.write(codeLength);
-    }
+
 
     private void writeCode(@NotNull OutputStream outputStream, @NotNull Map<Integer, Bits> table, @NotNull Queue<Integer> bytes) throws IOException {
         Bits nextByte = new Bits();
@@ -164,7 +158,7 @@ public class Huffman implements Compressor{
     @Override
     public void decode(@NotNull InputStream inputStream, @NotNull OutputStream outputStream) throws IOException {
         final Map<Bits, Integer> table = readTable(inputStream);
-        int codeLength = readCodeLength(inputStream);
+        int codeLength = CompressionUtil.readInteger(inputStream, 0xFF);
 
         int current = inputStream.read();
         Bits nextByte = new Bits();
@@ -184,15 +178,7 @@ public class Huffman implements Compressor{
         }
     }
 
-    private int readCodeLength(@NotNull InputStream inputStream) throws IOException {
-        int length = 0;
-        int current = inputStream.read();
-        while (current != 0xFF){
-            length += current;
-            current = inputStream.read();
-        }
-        return length;
-    }
+
 
     private boolean bitAt(int abyte, int pos) {//pos from 0 to 7, right to left
         return pos < 8 && (abyte >>> pos & 1) != 0;
