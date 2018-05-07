@@ -121,4 +121,43 @@ public class AllMapsTest {
         }
         assertThat(s).isEqualTo(10);
     }
+
+    @Test
+    public void lidlKeysTest(){
+        Map<String, String> mape = new BinaryTrieMap<>();
+        mape.put("A","A");
+        mape.put("B", "B");
+        mape.put("C", "C");
+        mape.put("D", "D");
+        mape.put("E", "E");
+        mape.put("F", "F");
+        mape.put("G", "G");
+        mape.put("H", "H");
+        mape.put("I", "I");
+        mape.put("J", "J");
+
+        Iterator<String> mapKeys = mape.keys();
+        int s = 0;
+        while(mapKeys.hasNext()){
+            s++;
+            System.out.println(mapKeys.next());
+        }
+        System.out.println("\n\n\n");
+        assertThat(s).isEqualTo(10);
+    }
+
+    @Test
+    public void wildCardTest(){
+        TSTMap<String> mape = new TSTMap<>();
+        mape.put("DEDO", "DEDO");
+        mape.put("DIJASDFAAFGO", "DIJASDFAAFGO");
+        mape.put("DADO", "DADO");
+        mape.put("RADO", "RADO");
+        mape.put("LADO", "LADO");
+        mape.put("DOJO", "DOJO");
+        mape.put("LEMO", "LEMO");
+
+       ArrayList<String> strings = mape.wildcard("*O");
+       System.out.println(strings);
+    }
 }

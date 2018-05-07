@@ -25,9 +25,9 @@ public class QuickMedOfThreeSorter extends AbstractHybridQuickSorter{
         compareAndExchange(comparator, list, lo, hi-1);
         compareAndExchange(comparator, list, lo, hi);
         compareAndExchange(comparator, list, hi-1, hi);
-        int i = partition(comparator, list, lo, hi);
-        sort(comparator, list, lo, i-1);
-        sort(comparator, list, i+1, hi);
+        int i = partition(comparator, list, lo+1, hi-1);
+        sort(comparator, list, lo+1, i-1);
+        sort(comparator, list, i+1, hi-1);
     }
 
     private <T> void compareAndExchange(@NotNull Comparator<T> comparator, @NotNull List<T> list, int i1, int i2){

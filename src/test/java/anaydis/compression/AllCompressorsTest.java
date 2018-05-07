@@ -91,4 +91,17 @@ public class AllCompressorsTest {
         //System.out.println(decodedOStream.toString());
         assertThat(decodedOStream.toString()).isEqualTo(string);
     }
+
+    @Test
+    public void ComprefdssorTest() throws IOException {
+        String string = "DRDOBBS";
+        InputStream iStream = new ByteArrayInputStream(string.getBytes(StandardCharsets.UTF_8.name()));
+        ByteArrayOutputStream oStream = new ByteArrayOutputStream();
+        compressor.encode(iStream, oStream);
+        //System.out.println(oStream.toString());
+        ByteArrayOutputStream decodedOStream = new ByteArrayOutputStream();
+        compressor.decode(new ByteArrayInputStream(oStream.toByteArray()), decodedOStream);
+        //System.out.println(decodedOStream.toString());
+        assertThat(decodedOStream.toString()).isEqualTo(string);
+    }
 }

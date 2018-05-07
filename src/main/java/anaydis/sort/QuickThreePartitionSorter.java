@@ -21,7 +21,7 @@ public class QuickThreePartitionSorter extends AbstractQuickSorter{
         int lt = lo;//lt is the index of the left-most equal pivot
         int gt = hi;//gt is the index of the right-most equal pivot
         T v = list.get(lo);
-        int i = lo;
+        int i = lo+1;
         while(i <= gt){
             int cmp = comparator.compare(list.get(i), v);// use greater
             if(cmp < 0)

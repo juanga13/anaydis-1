@@ -54,7 +54,7 @@ public class BinaryTrieMap<V> extends TreeMap<String,V> {
 
     private boolean bitAt(String s, int nth) {
         int pos = nth/8;
-        return pos < s.length() && ((int) s.charAt(pos) >> (nth % 8) & 1) != 0;
+        return pos < s.length() && ((int) s.charAt(pos) >> 7-(nth % 8) & 1) != 0;
     }
 
     private Node<V> split(Node<V> a, Node<V> b, int level) {
@@ -91,7 +91,7 @@ public class BinaryTrieMap<V> extends TreeMap<String,V> {
         String nodeKey = currentKey + node.key;
         keysInOrder(node.left, nodeKey, keys);
         if(node.value != null) keys.add(nodeKey);
-        keysInOrder(node.right, currentKey, keys);
+        keysInOrder(node.right, nodeKey, keys);
     }
 
     private Node<V> find(Node<V> node, @NotNull String key, int level){

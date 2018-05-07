@@ -23,7 +23,7 @@ public class MergeBUSort extends AbstractMergeSorter{
         for(int mid = 1; mid <= hi-lo; mid *= 2){
             final int midX2 = mid * 2;
             for(int lo1 = lo; lo1 <= hi - mid; lo1 += midX2){
-                final int hi1 = Math.min(lo1 - lo + midX2 - 1, hi);
+                final int hi1 = Math.min(lo1 + midX2 - 1, hi);
                 merge(comparator, list, lo1, lo1 + mid - 1, hi1);
             }
         }

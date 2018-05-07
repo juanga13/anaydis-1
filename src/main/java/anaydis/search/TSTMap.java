@@ -46,9 +46,8 @@ public class TSTMap<V> extends TreeMap<String,V>{
                 previousValue = node.value;
                 node.value = value;
             }
-            else{
+            else
                 node.middle = put(node.middle, key, value, level+1);
-            }
             return node;
         }
         else if(key.charAt(level) > node.chr){
@@ -103,5 +102,95 @@ public class TSTMap<V> extends TreeMap<String,V>{
         private Node(char chr){
             this.chr = chr;
         }
+    }
+
+
+    public ArrayList<String> wildcard(String pattern){
+        ArrayList<String> collector = new ArrayList<>();
+        wildcard(head, pattern, collector, 0, "");
+        return collector;
+    }
+
+    public void dotWildcard(Node<V> node, String pattern, List<String> collector, int level, String currentKey){
+        if(node == null || level == pattern.length()) return;
+        char c = pattern.charAt(level);
+        if(node.chr > c || c == '.')
+            dotWildcard(node.left, pattern, collector, level, currentKey);
+        if(node.chr == c || c == '.') {
+            String newKey = currentKey + node.chr;
+            if(level + 1 == pattern.length() && node.value != null)
+                collector.add(newKey);
+            else
+                dotWildcard(node.middle, pattern, collector, level + 1, newKey);
+        }
+        if(node.chr < c || c == '.')
+            dotWildcard(node.right, pattern, collector, level, currentKey);
+    }
+
+    /*
+    public void wildcard(Node<V> node, String pattern, List<String> collector, int level, String currentKey) {
+        if (node == null || level == pattern.length()) return;
+        char c = pattern.charAt(level);
+        String newKey = currentKey + node.chr;
+        if (c == '*') {
+            if(pattern.length() > level+1) {
+                char nextC = pattern.charAt(level + 1);
+                if (node.chr == nextC) {
+                    if (level + 2 == pattern.length() && node.value != null)
+                        collector.add(newKey);
+                    else
+                        //wildcard(node.middle, pattern, collector, level, newKey);
+                        wildcard(node.middle, pattern, collector, level + 2, newKey);
+                    return;
+                }
+            }
+            wildcard(node.left, pattern, collector, level, currentKey);
+            if (node.value != null)
+                collector.add(newKey);
+            else
+                wildcard(node.middle, pattern, collector, level, newKey);
+            wildcard(node.right, pattern, collector, level, currentKey);
+
+        } else {
+            if(c < node.chr)
+                wildcard(node.left, pattern, collector, level, currentKey);
+            else if(node.chr == c) {
+                if(level + 1 == pattern.length() && node.value != null)
+                    collector.add(newKey);
+                else
+                    wildcard(node.middle, pattern, collector, level + 1, newKey);
+            }
+            else if(c > node.chr)
+                wildcard(node.right, pattern, collector, level, currentKey);
+        }
+    }
+    */
+
+    public void wildcard(Node<V> node, String pattern, List<String> collector, int level, String currentKey){
+        if(node == null || level == pattern.length()) return;
+        char c = pattern.charAt(level);
+        boolean token = c == '*';
+        int cmp = Integer.compare(c, node.chr);
+
+        if (token && pattern.length() > level + 1) {
+            char nextC = pattern.charAt(level + 1);
+            if (node.chr == nextC) {
+               level++;
+               cmp = 0;
+               token = false;
+            }
+        }
+
+        if(cmp < 0 || token)
+            wildcard(node.left, pattern, collector, level, currentKey);
+        if(cmp == 0 || token) {
+            String newKey = currentKey + node.chr;
+            if(level + 1 == pattern.length() && node.value != null)
+                collector.add(newKey);
+            else
+                wildcard(node.middle, pattern, collector, token ? level : level + 1, newKey);
+        }
+        if(cmp > 0 || token)
+            wildcard(node.right, pattern, collector, level, currentKey);
     }
 }
